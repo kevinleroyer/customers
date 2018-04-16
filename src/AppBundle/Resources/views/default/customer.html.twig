@@ -1,0 +1,62 @@
+{% extends '@App/base.html.twig' %}
+
+{% block body %}
+
+    {% set current_path = app.request.get('_route') %}
+
+    <div id="wrapper">
+        <div class="container">
+
+            {% if current_path == 'edit_customer' %}
+                <h1>Edit {{ customer.getFullName() }}</h1>
+            {% else %}
+                <h1>New Customer</h1>
+            {% endif %}
+
+            {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+            <div class="form-group">
+                {{ form_label(form.lastname) }}
+                {{ form_widget(form.lastname) }}
+                <div class="form-error">{{ form_errors(form.lastname) }}</div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.firstname) }}
+                {{ form_widget(form.firstname) }}
+                {{ form_errors(form.firstname) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.phone) }}
+                {{ form_widget(form.phone) }}
+                {{ form_errors(form.phone) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.contactDate) }}
+                <div class="container">
+                    <div class="row">
+                        {{ form_widget(form.contactDate.date.month, {attr: {class: 'custom-select col-md-2'}}) }}
+                        {{ form_widget(form.contactDate.date.day, {attr: {class: 'custom-select col-md-2'}}) }}
+                        {{ form_widget(form.contactDate.date.year, {attr: {class: 'custom-select col-md-2'}}) }}
+                        {{ form_widget(form.contactDate.time.hour, {attr: {class: 'custom-select col-md-2'}}) }}
+                        {{ form_widget(form.contactDate.time.minute, {attr: {class: 'custom-select col-md-2'}}) }}
+                    </div>
+                </div>
+                {{ form_errors(form.contactDate) }}
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                {% if current_path == 'edit_customer' %}
+                    <a href="{{ path('delete_customer', { id: customer.id}) }}" class="btn btn-danger">Delete</a>
+                {% endif %}
+                <a href="{{ path('homepage') }}" class="btn btn-light">Cancel</a>
+            </div>
+
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+{% endblock %}

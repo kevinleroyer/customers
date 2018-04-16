@@ -1,0 +1,18 @@
+{% extends '@App/base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div class="container">
+            <h1>Customer List <a href="{{ path('add_customer') }}">+</a></h1>
+
+            <form class="form-group">
+                <input type="text" class="form-control" id="search-customer-input" placeholder="Search...">
+                <input type="hidden" name="ajax_path" id="ajax_path" value="{{ path('find_customer') }}">
+            </form>
+
+            <div class="list-group" id="customers-list">
+                {{ include('@App/default/customer-list.html.twig', { 'customers': customers }) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
